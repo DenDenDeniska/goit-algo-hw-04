@@ -4,12 +4,21 @@ def parse_input(user_input):
     return cmd, *args
 
 def add_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
-    return "Contact added."
+    try:
+        name, phone = args
+    except ValueError:
+        return "Передано неверное кол-во аргументов"
+    if name in contacts:
+        return "Контакт уже существует"
+    else:
+        contacts[name] = phone
+        return "Contact added."
 
 def change_contact(args, contacts):
-    name, phone = args
+    try:
+        name, phone = args
+    except ValueError:
+        return "Передано неверное кол-во аргументов"
     if name in contacts:
         contacts[name] = phone
         return "Contact updated"
@@ -17,15 +26,16 @@ def change_contact(args, contacts):
         return "К сожалению контакт с таким именем не найдет"
 
 def show_phone(args, contacts):
-    name, = args
+    try:
+        name, = args
+    except ValueError:
+        return "Передано неверное кол-во аргументов"
     if name in contacts:
         return contacts[name]
     else:
         return "К сожалению контакт с таким именем не найдет"
 
 def show_all(contact, contacts):
-    print(contacts)
-    print (f"Имя: {contact} номер телефона {contacts[contact]}\n")
     return f"Имя: {contact} номер телефона {contacts[contact]}\n"
 
 def main():
